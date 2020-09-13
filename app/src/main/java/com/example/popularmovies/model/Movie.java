@@ -1,6 +1,9 @@
 package com.example.popularmovies.model;
 
-public class Movie {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Movie implements Parcelable {
     private String poster;
     private int id;
     private double voteAverage;
@@ -21,6 +24,18 @@ public class Movie {
 
     public Movie() {
     }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getReleaseDate() {
         return releaseDate;
@@ -77,4 +92,32 @@ public class Movie {
     public void setOverview(String overview) {
         this.overview = overview;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(poster);
+        parcel.writeInt(id);
+        parcel.writeDouble(voteAverage);
+        parcel.writeString(title);
+        parcel.writeString(language);
+        parcel.writeString(overview);
+        parcel.writeString(releaseDate);
+    }
+
+    protected Movie(Parcel parcel){
+        this.poster = parcel.readString();
+        this.id = parcel.readInt();
+        this.voteAverage = parcel.readDouble();
+        this.title = parcel.readString();
+        this.language = parcel.readString();
+        this.overview = parcel.readString();
+        this.releaseDate = parcel.readString();
+    }
+
 }

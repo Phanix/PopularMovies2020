@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.net.UrlQuerySanitizer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -27,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieRecylerViewAdapter.MovieClickHandler {
 
     RecyclerView recyclerView;
     MovieRecylerViewAdapter adapter;
@@ -39,10 +41,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.movie_recycler);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        adapter = new MovieRecylerViewAdapter(this);
+        adapter = new MovieRecylerViewAdapter(this, this);
         recyclerView.setAdapter(adapter);
 
         new GetDataAsyncTask().execute();
+    }
+
+    @Override
+    public void onMovieClick(Movie movie) {
+        Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+        startActivity(intent);
     }
 
     private class GetDataAsyncTask extends AsyncTask<Void, Void, String>{

@@ -18,9 +18,12 @@ import java.util.List;
 public class MovieRecylerViewAdapter  extends RecyclerView.Adapter<MovieRecylerViewAdapter.MovieViewHolder>{
 
     private Context context;
-    List<Movie> movies;
-    public MovieRecylerViewAdapter(Context context){
+    protected MovieClickHandler clickHandler;
+    protected List<Movie> movies;
+
+    public MovieRecylerViewAdapter(Context context, MovieClickHandler clickHandler){
         this.context = context;
+        this.clickHandler = clickHandler;
     }
 
     public void setMovies(List<Movie> movies){
@@ -45,17 +48,28 @@ public class MovieRecylerViewAdapter  extends RecyclerView.Adapter<MovieRecylerV
         return movies == null ? 0 : movies.size();
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder{
+    public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private ImageView imageView;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.img_poster);
+            imageView.setOnClickListener(this);
         }
 
         public void bind(Movie movie, Context context){
             Picasso.get().load("http://image.tmdb.org/t/p/w185" + movie.getPoster()).into(imageView);
         }
+
+        @Override
+        public void onClick(View view) {
+            clickHandler.onMovieClick(movies.get(getAdapterPosition()));
+        }
+    }
+
+
+    public interface MovieClickHandler{
+        void onMovieClick(Movie movie);
     }
 }
