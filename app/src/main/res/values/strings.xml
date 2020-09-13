@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PopularMovies</string>
+    <string name="fake_year">2015</string>
+    <string name="fake_duration">120m</string>
+    <string name="fake_rate">8/10</string>
+    <string name="fav_text">Mark as favorite</string>
+    <string name="fake_overview">When the Emperor of China issues a decree that one man per family must serve in the Imperial Chinese Army</string>
 </resources>

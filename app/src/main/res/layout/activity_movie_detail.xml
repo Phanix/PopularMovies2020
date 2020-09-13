@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+        android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,4 +8,53 @@
         android:layout_height="match_parent"
         tools:context=".MovieDetailActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    >
+    <ImageView android:layout_width="0dp" android:layout_height="wrap_content"
+               android:src="@drawable/ic_launcher_background"
+               android:layout_weight="1"/>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+                  android:layout_weight="1">
+    
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:id="@+id/tv_year"
+                      android:text="@string/fake_year"
+/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/tv_duration"
+                  android:text="@string/fake_duration"
+        />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:id="@+id/tv_rate"
+                  android:text="@string/fake_rate"
+        />
+
+        <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:id="@+id/btn_fav"
+                android:text="@string/fav_text"
+                android:background="@color/colorAccent"/>
+
+        
+    </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:text="@string/fake_overview"
+              android:textSize="18sp"/>
+    <View android:layout_width="match_parent" android:layout_height="1dp"
+          android:background="@android:color/background_dark"
+          android:layout_marginTop="20dp"/>
+
+</LinearLayout>
