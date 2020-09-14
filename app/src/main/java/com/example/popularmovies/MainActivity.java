@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements MovieRecylerViewA
     @Override
     public void onMovieClick(Movie movie) {
         Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+        intent.putExtra("movie", movie);
         startActivity(intent);
     }
 
