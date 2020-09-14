@@ -3,6 +3,7 @@ package com.example.popularmovies.util;
 import android.util.Log;
 
 import com.example.popularmovies.model.Movie;
+import com.example.popularmovies.model.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,5 +47,23 @@ public class JsonHelper {
         }
 
         return movies;
+    }
+
+    public static List<Trailer> getTrailers(String jsonData){
+        List<Trailer>trailers = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(jsonData);
+            JSONArray jsonArray = jsonObject.getJSONArray("results");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String id = jsonArray.getJSONObject(i).getString("key");
+                trailers.add(new Trailer(id));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return trailers;
+
     }
 }
