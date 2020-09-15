@@ -54,12 +54,14 @@ public class MainActivity extends AppCompatActivity implements MovieRecylerViewA
     RecyclerView recyclerView;
     ListView favoriteListView;
     MovieRecylerViewAdapter adapter;
+    public static final String KEY_FAVORITES = "favorites";
+    public static final String KEY_MOVIE_EXTRA = "movie";
+    public static final String KEY_SHARED_PREFERENCES = "com.example.popularmovies";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = getSharedPreferences("com.example.popularmovies", MODE_PRIVATE);
 
         favoriteListView = findViewById(R.id.favorites__list_view);
         imgNoInternet = findViewById(R.id.img_no_internet);
@@ -71,21 +73,22 @@ public class MainActivity extends AppCompatActivity implements MovieRecylerViewA
         recyclerView.setAdapter(adapter);
         checkNetWork(options[0]);
 
+
     }
 
 
 
     private void getFavorites(){
         favoriteListView.setVisibility(View.VISIBLE);
-        Set<String> favorites =  sharedPreferences.getStringSet("favorites", null);
+        Set<String> favorites =  sharedPreferences.getStringSet(KEY_FAVORITES, null);
         if(favorites == null) return;
-        String [] fa = new String[favorites.size()];
+        String [] favoritesArray = new String[favorites.size()];
         int i = 0;
         for(String fav : favorites){
-            fa[i] = fav;
+            favoritesArray[i] = fav;
             i++;
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, fa);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, favoritesArray);
         favoriteListView.setAdapter(adapter);
     }
 
@@ -104,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements MovieRecylerViewA
     @Override
     public void onMovieClick(Movie movie) {
         Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
-        intent.putExtra("movie", movie);
+        intent.putExtra(KEY_MOVIE_EXTRA, movie);
         startActivity(intent);
     }
 
@@ -145,6 +148,14 @@ public class MainActivity extends AppCompatActivity implements MovieRecylerViewA
                 Log.i("TAG", "onPostExecute: no data");
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sharedPreferences = getSharedPreferences(KEY_SHARED_PREFERENCES, MODE_PRIVATE);
+
+
     }
 
     @Override

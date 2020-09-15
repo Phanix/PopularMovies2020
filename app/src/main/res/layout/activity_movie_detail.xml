@@ -54,7 +54,7 @@
                 android:id="@+id/btn_fav"
                 android:text="@string/fav_text"
                 android:layout_marginTop="10dp"
-            android:textColor="@android:color/white"
+                android:textColor="@android:color/white"
                 android:background="@color/colorPrimary"/>
 
 

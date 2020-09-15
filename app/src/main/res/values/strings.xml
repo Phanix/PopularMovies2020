@@ -6,8 +6,8 @@
     <string name="fav_text">Mark as favorite</string>
     <string name="fake_overview">When the Emperor of China issues a decree that one man per family must serve in the Imperial Chinese Army</string>
     <string name="trailers">Trailers:</string>
-    <string name="popular">popular</string>
-    <string name="rated">top rated</string>
+    <string name="popular">Popular</string>
+    <string name="rated">Top Rated</string>
     <string name="error_internet" tools:ignore="ExtraTranslation">Internet Unavailable</string>
     <string name="favorites">Favorites</string>
 </resources>

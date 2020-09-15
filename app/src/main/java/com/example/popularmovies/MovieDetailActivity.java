@@ -34,6 +34,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.microedition.khronos.egl.EGLDisplay;
+
+import static com.example.popularmovies.MainActivity.KEY_FAVORITES;
+import static com.example.popularmovies.MainActivity.KEY_MOVIE_EXTRA;
+import static com.example.popularmovies.MainActivity.KEY_SHARED_PREFERENCES;
+
 public class MovieDetailActivity extends AppCompatActivity implements TraileRecylerViewAdapter.TrailerClickHandler {
 
 
@@ -53,11 +59,17 @@ public class MovieDetailActivity extends AppCompatActivity implements TraileRecy
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        final Movie movie = getIntent().getExtras().getParcelable("movie");
-        sharedPreferences = getSharedPreferences("com.example.popularmovies", MODE_PRIVATE);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        final Movie movie = getIntent().getExtras().getParcelable(MainActivity.KEY_MOVIE_EXTRA);
+        sharedPreferences = getSharedPreferences( KEY_SHARED_PREFERENCES, MODE_PRIVATE);
         editor = sharedPreferences.edit();
         favoriteButton = findViewById(R.id.btn_fav);
-        popularMovies = sharedPreferences.getStringSet("favorites", null);
+
+        popularMovies = sharedPreferences.getStringSet(KEY_FAVORITES, null);
+
+
         if(popularMovies != null){
             if(popularMovies.contains(movie.getTitle())){
                 favoriteButton.setBackgroundColor(Color.RED);
@@ -72,7 +84,9 @@ public class MovieDetailActivity extends AppCompatActivity implements TraileRecy
                 if(isFav){
                     favoriteButton.setBackgroundColor(Color.GREEN);
                     popularMovies.remove(movie.getTitle());
-                    editor.putStringSet("favorites", popularMovies);
+                    editor.clear();
+                    editor.apply();
+                    editor.putStringSet(KEY_FAVORITES, popularMovies);
                     editor.apply();
                     return;
                 }
@@ -82,7 +96,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TraileRecy
                 }
                 if(!popularMovies.contains(movie.getTitle())) {
                     popularMovies.add(movie.getTitle());
-                    editor.putStringSet("favorites", popularMovies);
+                    editor.putStringSet(KEY_FAVORITES, popularMovies);
                     editor.apply();
                 }
 
@@ -104,7 +118,7 @@ public class MovieDetailActivity extends AppCompatActivity implements TraileRecy
         trailerRecyclerView.setAdapter(adapter);
 
 
-        Log.i("TAG", "onCreate: " + movie.getId());
+
         Picasso.get().load("http://image.tmdb.org/t/p/w185" + movie.getPoster()).into(movieImage);
         voteAverage.setText(String.valueOf(movie.getVoteAverage()) + "/10");
         description.setText(movie.getOverview());
@@ -150,8 +164,6 @@ public class MovieDetailActivity extends AppCompatActivity implements TraileRecy
                 e.printStackTrace();
             }
             return trailers.toString();
-
-
         }
 
         @Override

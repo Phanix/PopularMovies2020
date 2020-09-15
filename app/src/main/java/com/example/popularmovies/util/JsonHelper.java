@@ -24,16 +24,17 @@ public class JsonHelper {
     private String releaseDate;
     */
     public static List<Movie> getMovies(String jsonData) {
+
         List<Movie> movies = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonData);
             int totalResults = jsonObject.getInt("total_results");
-            Log.i(TAG , "getMovies: " + totalResults);
+
             JSONArray jsonArray = jsonObject.getJSONArray("results");
             for (int i = 0; i < jsonArray.length(); i++) {
                 String posterPath = jsonArray.getJSONObject(i).getString("poster_path");
                 int id = jsonArray.getJSONObject(i).getInt("id");
-                String title = jsonArray.getJSONObject(i).getString("original_title");
+                String title =       jsonArray.getJSONObject(i).getString("title");
                 double voteAverage = jsonArray.getJSONObject(i).getDouble("vote_average");
                 String overview = jsonArray.getJSONObject(i).getString("overview");
                 String releaseDate = jsonArray.getJSONObject(i).getString("release_date");
